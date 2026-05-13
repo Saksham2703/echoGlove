@@ -1,8 +1,11 @@
 # EchoGlove — Orchestration Design
 
 **Date:** 2026-05-12
+
 **Status:** Draft — awaiting user review
+
 **Author:** Saksham Jain (with Claude)
+
 **Scope:** End-to-end plan for building EchoGlove v1 (live hand pose in a Python viewer) and v2 (ultrasonic-augmented pose), spanning hardware sourcing, firmware, perception/fusion, and the learning curriculum that goes with it.
 
 ---
