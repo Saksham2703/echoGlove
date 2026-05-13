@@ -1,0 +1,22 @@
+[project]
+name = "echoglove"
+version = "0.1.0"
+description = "EchoGlove host-side: USB serial reader, sensor fusion, and 3D viewer."
+readme = "README.md"
+authors = [
+    { name = "Saksham Jain", email = "sakshamjain2703@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "pyserial>=3.5",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.14,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "ruff>=0.15.12",
+]
