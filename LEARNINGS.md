@@ -43,3 +43,19 @@ The S3 has native USB-CDC, so it appears as `tty.usbmodem*` on macOS (no
 CH340/CP2102 driver needed). The Freenove WROVER board uses a CP2102 bridge
 and appears as `tty.usbserial-*`. Knowing which pattern to look for avoids
 confusion when both boards are plugged in simultaneously.
+
+## 2026-05-24 — ESP32-S3 DevKitC-1 onboard LED is WS2812 RGB on GPIO 48, not a plain LED
+
+`digitalWrite(2, HIGH)` does nothing visible — GPIO 2 has no LED on this board.
+The onboard LED is an addressable WS2812B RGB LED on GPIO 48. Use
+`neopixelWrite(48, r, g, b)` (built into the Arduino ESP32 framework, no extra
+library needed). Also: after flashing, esptool's RTS hard-reset doesn't reliably
+exit bootloader mode with native USB-CDC — unplug and replug the USB cable for a
+clean boot into firmware.
+
+## 2026-05-24 — Bootloader mode re-enumerates under a different /dev/tty.usbmodem* path
+
+When the ESP32-S3 is put into download mode (BOOT+RST), macOS assigns it a
+different device node than when running firmware (e.g. `usbmodem1234561` →
+`usbmodem1101`). This is normal. Always check `ls /dev/tty.usb*` after the
+BOOT+RST sequence and use the new path for `--upload-port`.
