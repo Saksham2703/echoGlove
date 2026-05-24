@@ -43,16 +43,18 @@ Tasks 5, 6, and 8 are complete. **Task 7 is optional** (soldering practice on sc
 - **Host Python layout:** uv 0.11.14 created the `host/src/echoglove/` layout (modern uv default). This is intentional — we kept the src/ layout rather than flattening to `host/echoglove/` as the plan originally suggested. Imports work as `from echoglove.serial_reader import ...` via uv's editable install. The plan's "flatten" step in Task 3 was skipped on purpose.
 - **PlatformIO Core path:** Lives at `~/.platformio/penv/bin/pio`. Add to PATH or use the full path. VS Code's PlatformIO extension uses the same install.
 - **uv version:** `0.11.14` (Homebrew). Python pinned to `3.12` for the host package.
+- **Flashing workflow (learned 2026-05-24):** The ESP32-S3 requires manual bootloader entry every flash: hold BOOT, tap RST, release BOOT. The device re-enumerates at `/dev/tty.usbmodem1101` (bootloader mode) — use that port for `--upload-port`. After flash, unplug+replug to boot into firmware (RTS hard-reset is unreliable with native USB-CDC). Running firmware also appears at `/dev/tty.usbmodem1101`.
+- **Onboard LED (learned 2026-05-24):** GPIO 48, WS2812B RGB. Use `neopixelWrite(48, r, g, b)` — plain `digitalWrite` does nothing. GPIO 2 has no LED on this board.
+- **IDE false positives:** VS Code clang shows `'Arduino.h' file not found` and `undeclared identifier` errors in firmware files. These are clang LSP not knowing the PlatformIO include paths — not real errors. PlatformIO builds compile and flash correctly regardless.
+- **serial_reader stream_port:** Uses `readline()` loop, not `parse_lines()`. `parse_lines()` buffers until EOF (never arrives on a live port). The fix is committed in `host/src/echoglove/serial_reader.py`.
 - **Commit messages:** No conventional-commit prefixes (no `feat:`/`chore:`). Short title (<50 chars), imperative; body only when there's real work to explain. **Never** add `Co-Authored-By: Claude ...` trailers (durable rule, also recorded in global `~/Projects/CLAUDE.md` §5).
 - **Git pushes:** Repo is private and stays local. Never push to remote without asking.
 
-## Hardware arrival checklist (run this once the Freenove kit lands)
+## Before Task 9 (I²C sensor wiring)
 
-1. Photograph the kit contents laid out on a table.
-2. Cross-check against the pre-filled "Kit inventory" section in `hardware/bom-phase0.md` — flag any missing or substituted parts in "As-arrived inventory".
-3. Confirm the **Accelerometer Module** is in fact a GY-521 / MPU-6050. If it's an MPU-9250 or LSM6DS3 instead, the Task 9 register addresses change — paste the actual silkscreen text into the next session and we'll adapt.
-4. Confirm the included USB cable is a **data** cable (not charge-only) by plugging the Freenove board in and checking `ls /dev/tty.usbmodem* /dev/tty.usbserial*` — at least one entry should appear. (Note: this is the WROVER board, which uses a CP2102 USB-UART bridge — it shows up as `tty.usbserial-*`, not `tty.usbmodem*`.)
-5. When the ordered ESP32-S3 DevKitC-1 2-pack arrives separately, plug one in with one of the new UGREEN USB-C cables — it should appear as `/dev/tty.usbmodem*` (S3 has native USB-CDC, different device name from the WROVER).
+1. **Physically locate the MPU-6050 module** in the Freenove kit — it's the "Accelerometer Module" (GY-521 PCB, says MPU-6050 on the chip). Photograph the silkscreen and paste it to Claude if it's not an MPU-6050; register addresses differ for MPU-9250 or LSM6DS3.
+2. Wire it up per `hardware/wiring/phase0-i2c.md`: SDA → GPIO 8, SCL → GPIO 9, VCC → 3.3V, GND → GND. Photo before power-on — Claude sanity-checks.
+3. The breadboard currently has the ESP32-S3 and the button circuit (GPIO 4). The I²C sensor shares the same breadboard — leave the button wired, add the sensor in a free area.
 
 ## Convention
 
