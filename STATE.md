@@ -1,10 +1,10 @@
 # STATE — where I left off
 
 **Last updated:** 2026-05-24
-**Current phase:** Phase 0 — Fundamentals (4 of 10 tasks done; all hardware now in hand)
-**Last commit:** `9295dbe Scaffold host Python package with uv`
-**Next step:** Task 8 (Python serial-reader TDD, pure software — do this first). Then Task 5 (plug in ESP32-S3, flash LED blink). Tasks 6, 7, 9 follow in sequence.
-**Blocked on:** Nothing. All Phase 0 hardware confirmed arrived 2026-05-24.
+**Current phase:** Phase 0 — Fundamentals (5 of 10 tasks done; all hardware in hand)
+**Last commit:** `def5fb4 Add serial JSON-line reader and parser`
+**Next step:** Task 5 — plug in ESP32-S3 DevKitC-1, flash LED blink. Tasks 6, 7, 9, 10 follow in sequence.
+**Blocked on:** Nothing.
 
 ---
 
@@ -29,11 +29,11 @@
 | 5 | LED blink | **pending — needs hardware** | `firmware/phase0-blink/` (to be created) |
 | 6 | Button + JSON serial | **pending — needs hardware** | same firmware project |
 | 7 | Soldering practice | **pending — needs hardware** | `hardware/wiring/phase0-soldering-notes.md` |
-| 8 | Python serial reader + pytest | **doable now (no hardware)** | `host/src/echoglove/serial_reader.py`, `host/tests/test_serial_reader.py` |
+| 8 | Python serial reader + pytest | ✓ committed | `host/src/echoglove/serial_reader.py`, `host/tests/test_serial_reader.py`, commit `def5fb4` |
 | 9 | I²C sensor wiring + raw read | **pending — needs hardware** | same firmware project + `hardware/wiring/phase0-i2c.md` |
 | 10 | Verification + retro + `git tag phase-0` | **pending** | `docs/phases/phase0-retro.md` |
 
-If the next session wants to make progress before parts arrive, **Task 8 is the right next move** — it's pure TDD against in-memory streams. See plan section "Task 8: Python host-side serial reader with pytest" for the exact 5 steps.
+Task 8 is complete. **Task 5 is next** — plug in the ESP32-S3 DevKitC-1, verify `ls /dev/tty.usb*` shows it, create `firmware/phase0-blink/`, and flash the LED blink firmware.
 
 ## Critical context (gotchas already resolved — don't redo)
 
