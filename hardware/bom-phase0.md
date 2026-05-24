@@ -4,13 +4,13 @@
 
 | # | Item | Spec | Link | Price | Ordered? | Arrived? |
 |---|---|---|---|---|---|---|
-| 1 | Soldering iron — Pinecil V2 | USB-C PD, 60W, replaceable tips | https://www.amazon.com/dp/B096X6SG13 | ~$40–50 | ✓ | [ ] |
-| 2 | 60/40 leaded rosin-core solder (HGMZZQ) | 0.8mm, 100g spool | https://www.amazon.com/dp/B07BGTSWYB | ~$9–11 | ✓ | [ ] |
-| 3 | Brass sponge tip cleaner (Weller WLACCBSH-02) | Brass sponge w/ silicone holder | https://www.amazon.com/dp/B08FQBS97L | ~$7–10 | ✓ | [ ] |
-| 4 | Digital multimeter (AstroAI 4000-count) | Auto-ranging, continuity beep, NCV | https://www.amazon.com/dp/B0DKXTR485 | ~$18–22 | ✓ | [ ] |
-| 5 | ESP32-S3 DevKitC-1 × 2 | WROOM-1, N16R8, USB-C, 2-pack | https://www.amazon.com/dp/B0FPLSQZWF | ~$22–28 | ✓ | [ ] |
-| 6 | USB-C to USB-C data cable × 2 | 1m, 100W, data-rated (UGREEN) | https://www.amazon.com/dp/B09N94MZG9 | ~$8–13 | ✓ | [ ] |
-| 7 | 22 AWG hookup wire kit (TUOFENG) | Solid-core, 6 colors, 30 ft each | https://www.amazon.com/dp/B07TX6BX47 | ~$12–16 | ✓ | [ ] |
+| 1 | Soldering iron — Pinecil V2 | USB-C PD, 60W, replaceable tips | https://www.amazon.com/dp/B096X6SG13 | ~$40–50 | ✓ | ✓ |
+| 2 | 60/40 leaded rosin-core solder (HGMZZQ) | 0.8mm, 100g spool | https://www.amazon.com/dp/B07BGTSWYB | ~$9–11 | ✓ | ✓ |
+| 3 | Brass sponge tip cleaner (Weller WLACCBSH-02) | Brass sponge w/ silicone holder | https://www.amazon.com/dp/B08FQBS97L | ~$7–10 | ✓ | ✓ |
+| 4 | Digital multimeter (AstroAI 4000-count) | Auto-ranging, continuity beep, NCV | https://www.amazon.com/dp/B0DKXTR485 | ~$18–22 | ✓ | ✓ |
+| 5 | ESP32-S3 DevKitC-1 × 2 | WROOM-1, N16R8, USB-C, 2-pack | https://www.amazon.com/dp/B0FPLSQZWF | ~$22–28 | ✓ | ✓ |
+| 6 | USB-C to USB-C data cable × 2 | 1m, 100W, data-rated (UGREEN) | https://www.amazon.com/dp/B09N94MZG9 | ~$8–13 | ✓ | ✓ |
+| 7 | 22 AWG hookup wire kit (TUOFENG) | Solid-core, 6 colors, 30 ft each | https://www.amazon.com/dp/B07TX6BX47 | ~$12–16 | ✓ | ✓ |
 | 8 | Helping hands w/ magnifier (SE MZ101B) | Optional — skipped for now | https://www.amazon.com/dp/B000RB38X8 | ~$8–12 | — | — |
 
 **Estimated total: $124–161**
@@ -73,7 +73,13 @@ Pre-filled from the official Freenove parts-list image (downloaded with the kit 
 - 1× Resistor color code card, 1× Plastic storage box
 
 ## As-arrived inventory
-(Confirm the above against the physical kit once it arrives — flag any missing/substituted items here. Photograph the layout and paste the list back into the next Claude session for cross-check.)
+
+**Freenove kit:** confirmed in hand as of 2026-05-24. Contents match the pre-filled
+"Kit inventory" list above (sourced from the official Freenove parts-list image).
+Formal photo inventory (lay everything out, photograph, cross-check) still pending —
+do this before Task 9 (I²C wiring) to confirm the MPU-6050 module is physically present.
+
+**Phase 0 tools (items 1–7):** all confirmed arrived 2026-05-24.
 
 ## Receipts
 (Save Amazon order confirmation PDFs to `hardware/receipts/` once orders ship.)

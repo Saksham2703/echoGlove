@@ -1,0 +1,45 @@
+# LEARNINGS
+
+Timestamped record of non-obvious things learned during the project.
+Append-only. Never edit past entries.
+
+---
+
+## 2026-05-13 — Freenove kit contains ESP32-WROVER-E, not ESP32-S3
+
+The Freenove ESP32 Ultimate Starter Kit (Amazon B0CJJJ7BCY) ships with an
+**ESP32-WROVER-E** dev board (original ESP32, Xtensa LX6, micro-USB connector),
+not an ESP32-S3. The orchestration spec assumes S3 throughout. Decision: treat
+the Freenove board as a parts source only (sensors, breadboard, discretes) and
+flash the separately-ordered ESP32-S3 DevKitC-1 2-pack as the firmware target.
+Do not use `board = esp32dev` in `platformio.ini` — stay on `board = esp32-s3-devkitc-1`.
+
+## 2026-05-13 — `CPLUS_INCLUDE_PATH` in ~/.zshrc breaks PlatformIO cross-compiler
+
+Line 41 of `~/.zshrc` previously appended the macOS CommandLineTools C++ SDK
+headers to `CPLUS_INCLUDE_PATH`. This makes the macOS system headers visible
+to GCC's cross-compiler, which causes build failures (wrong SDK, wrong arch).
+Commented out with a dated note. If Xtensa builds start failing with errors
+mentioning `/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/`, this env
+var has crept back — check `~/.zshrc`.
+
+## 2026-05-13 — uv creates src/ layout by default; we kept it
+
+`uv init --name echoglove --package` produces `host/src/echoglove/`, not
+`host/echoglove/`. The plan originally said to flatten it, but we skipped that
+step intentionally — uv's editable install handles the src layout transparently.
+Imports work as `from echoglove.serial_reader import ...`. Don't "fix" this.
+
+## 2026-05-13 — Charge-only USB-C cables silently prevent ESP32 flashing
+
+The most common "why won't my board show up in /dev/tty.*?" failure is a
+charge-only USB-C cable. The ESP32-S3 will power on but macOS won't enumerate
+it as a USB-CDC device. Always test with a cable spec'd as "data" (the UGREEN
+100W E-marker cables in the BOM are confirmed data-capable).
+
+## 2026-05-13 — ESP32-S3 DevKitC-1 shows up as /dev/tty.usbmodem*, not tty.usbserial*
+
+The S3 has native USB-CDC, so it appears as `tty.usbmodem*` on macOS (no
+CH340/CP2102 driver needed). The Freenove WROVER board uses a CP2102 bridge
+and appears as `tty.usbserial-*`. Knowing which pattern to look for avoids
+confusion when both boards are plugged in simultaneously.

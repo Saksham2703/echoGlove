@@ -70,6 +70,14 @@ Add project CLAUDE.md
 - BOMs with Amazon links and receipts: `hardware/bom-phaseN.md`.
 - Wiring diagrams: `hardware/wiring/phaseN-<name>.{md,fzz,png}`.
 - `STATE.md` at repo root: 3-line "where I left off" updated at the end of every working session.
+- `LEARNINGS.md` at repo root: append a timestamped entry whenever something non-obvious is learned — a hardware gotcha, a toolchain quirk, a concept that clicked, a debugging insight. Format:
+
+  ```
+  ## YYYY-MM-DD — <short title>
+  <1–3 sentences: what was learned and why it matters going forward.>
+  ```
+
+  Claude appends to this file when a learning surfaces mid-session. Never rewrite existing entries.
 
 ## Sourcing
 
