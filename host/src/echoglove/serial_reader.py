@@ -36,12 +36,23 @@ def parse_lines(stream: BinaryIO) -> Iterator[dict]:
 def stream_port(port: str, baud: int = 115200) -> Iterator[dict]:
     """Open a real serial port and yield parsed dicts forever.
 
+    Reads line-by-line so output appears as it arrives.
     Not unit-tested (needs hardware). Use parse_lines() for anything testable.
     """
     import serial  # lazy import so tests don't need hardware
 
     with serial.Serial(port, baud, timeout=1) as ser:
-        yield from parse_lines(ser)
+        while True:
+            raw = ser.readline()
+            if not raw:
+                continue
+            line = raw.strip()
+            if not line:
+                continue
+            try:
+                yield json.loads(line)
+            except json.JSONDecodeError as e:
+                raise ParseError(f"could not parse line: {line!r}") from e
 
 
 if __name__ == "__main__":

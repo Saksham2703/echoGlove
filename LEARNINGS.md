@@ -53,6 +53,13 @@ library needed). Also: after flashing, esptool's RTS hard-reset doesn't reliably
 exit bootloader mode with native USB-CDC — unplug and replug the USB cable for a
 clean boot into firmware.
 
+## 2026-05-24 — 4-pin tactile button orientation matters on a breadboard
+
+A 4-pin tactile button has two internally-shorted pairs of legs along its long
+axis. If placed in the wrong rotation, pressing it connects two already-shorted
+legs instead of bridging the two sides. If `digitalRead` never changes on press,
+try rotating the button 90 degrees before suspecting wiring or firmware.
+
 ## 2026-05-24 — Bootloader mode re-enumerates under a different /dev/tty.usbmodem* path
 
 When the ESP32-S3 is put into download mode (BOOT+RST), macOS assigns it a

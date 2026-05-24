@@ -1,9 +1,9 @@
 # STATE — where I left off
 
 **Last updated:** 2026-05-24
-**Current phase:** Phase 0 — Fundamentals (6 of 10 tasks done; all hardware in hand)
-**Last commit:** `Add Phase 0 firmware: blink onboard RGB LED`
-**Next step:** Task 6 — wire button on breadboard, add JSON serial output to firmware.
+**Current phase:** Phase 0 — Fundamentals (7 of 10 tasks done; all hardware in hand)
+**Last commit:** `Add button counter and JSON serial output`
+**Next step:** Task 7 (soldering practice, optional) then Task 9 (MPU-6050 I²C wiring).
 **Blocked on:** Nothing.
 
 ---
@@ -27,13 +27,13 @@
 | 3 | Python + uv host scaffold | ✓ pytest passes | `host/`, commit `9295dbe` |
 | 4 | Repo dirs + phase docs | ✓ | `docs/phases/`, `STATE.md`, commit `70feb5b` |
 | 5 | LED blink | ✓ committed | `firmware/phase0-blink/`, RGB LED on GPIO 48 via neopixelWrite |
-| 6 | Button + JSON serial | **pending — needs hardware** | same firmware project |
+| 6 | Button + JSON serial | ✓ committed | `firmware/phase0-blink/src/main.cpp`, button on GPIO 4 |
 | 7 | Soldering practice | **pending — needs hardware** | `hardware/wiring/phase0-soldering-notes.md` |
 | 8 | Python serial reader + pytest | ✓ committed | `host/src/echoglove/serial_reader.py`, `host/tests/test_serial_reader.py`, commit `def5fb4` |
 | 9 | I²C sensor wiring + raw read | **pending — needs hardware** | same firmware project + `hardware/wiring/phase0-i2c.md` |
 | 10 | Verification + retro + `git tag phase-0` | **pending** | `docs/phases/phase0-retro.md` |
 
-Tasks 5 and 8 are complete. **Task 6 is next** — wire a tactile button on the breadboard (GPIO 4 + 10 kΩ pull-up to 3.3V), photograph for sanity check, then update the firmware to read the button and emit JSON over USB serial. See plan Task 6 for the wiring diagram and updated `main.cpp`.
+Tasks 5, 6, and 8 are complete. **Task 7 is optional** (soldering practice on scrap perfboard — skip if you have prior soldering experience). **Task 9 is the main next step** — wire the MPU-6050 from the Freenove kit to the ESP32-S3 via I²C (GPIO 8 = SDA, GPIO 9 = SCL). First do a formal photo inventory of the Freenove kit to confirm the MPU-6050 module is present (see STATE.md hardware arrival checklist).
 
 ## Critical context (gotchas already resolved — don't redo)
 
