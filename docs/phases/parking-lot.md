@@ -6,6 +6,9 @@ to see if any should be promoted into the next phase.
 ## Promoted to next phase
 (none yet)
 
+## Phase 2+
+- Magnetometer calibration: figure-8 waving procedure to fully converge BNO055 NDOF mode. Needed for accurate absolute heading in Phase 3+ (BLE, untethered). Phase 1 only needs stable relative rotation.
+
 ## Future / v3+
 - SteamVR / OpenGloves driver integration
 - Second glove (left hand)
