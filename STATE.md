@@ -1,9 +1,9 @@
 # STATE — where I left off
 
 **Last updated:** 2026-05-24
-**Current phase:** Phase 0 — Fundamentals (7 of 10 tasks done; all hardware in hand)
-**Last commit:** `Add button counter and JSON serial output`
-**Next step:** Task 7 (soldering practice, optional) then Task 9 (MPU-6050 I²C wiring).
+**Current phase:** Phase 1 — IMU bring-up (Phase 0 shipped, tagged `phase-0`)
+**Last commit:** `Ship Phase 0`
+**Next step:** Brainstorm Phase 1 — order BNO055, write Phase 1 spec + plan.
 **Blocked on:** Nothing.
 
 ---
