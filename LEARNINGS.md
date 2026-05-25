@@ -66,3 +66,11 @@ When the ESP32-S3 is put into download mode (BOOT+RST), macOS assigns it a
 different device node than when running firmware (e.g. `usbmodem1234561` →
 `usbmodem1101`). This is normal. Always check `ls /dev/tty.usb*` after the
 BOOT+RST sequence and use the new path for `--upload-port`.
+
+## 2026-05-25 — Adafruit BusIO must be listed explicitly in platformio.ini lib_deps
+
+`Adafruit BNO055` depends on `Adafruit BusIO`, but PlatformIO does not always
+resolve it as a transitive dependency on `espressif32@6.7.0` — the build fails
+with `SPI.h: No such file or directory` from inside the BusIO source. Fix: add
+`adafruit/Adafruit BusIO@^1.16.1` explicitly to `lib_deps`. This applies to any
+Adafruit sensor library that pulls in BusIO.
