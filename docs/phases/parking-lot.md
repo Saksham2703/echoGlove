@@ -8,6 +8,7 @@ to see if any should be promoted into the next phase.
 
 ## Phase 2+
 - Magnetometer calibration: figure-8 waving procedure to fully converge BNO055 NDOF mode. Needed for accurate absolute heading in Phase 3+ (BLE, untethered). Phase 1 only needs stable relative rotation.
+- DIY sensor fusion: implement Madgwick or Mahony filter from scratch on the host side (bypassing BNO055 NDOF mode, using raw accel/gyro/mag). Pure learning exercise — understand what the BNO055 is doing internally.
 
 ## Future / v3+
 - SteamVR / OpenGloves driver integration
