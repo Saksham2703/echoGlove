@@ -1,10 +1,10 @@
 # STATE — where I left off
 
-**Last updated:** 2026-05-24
-**Current phase:** Phase 1 — IMU bring-up (Phase 0 shipped, tagged `phase-0`)
-**Last commit:** `Ship Phase 0`
-**Next step:** Brainstorm Phase 1 — order BNO055, write Phase 1 spec + plan.
-**Blocked on:** Nothing.
+**Last updated:** 2026-05-25
+**Current phase:** Phase 1 — IMU bring-up
+**Last commit:** `Add Phase 1 verification scripts (rate + no-jumps)`
+**Next step:** Order BNO055 (Amazon B017PEIGIG). When it arrives: solder header → wire → photo to Claude → fill blanks in firmware/phase1-imu/src/main.cpp → flash → run V1/V2/V3.
+**Blocked on:** BNO055 hardware arrival.
 
 ---
 
