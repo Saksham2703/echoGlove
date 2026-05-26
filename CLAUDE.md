@@ -49,6 +49,7 @@ Add project CLAUDE.md
 - Each phase has its own brainstorm → spec → plan → execute cycle. Do not start implementing a future phase ahead of its plan.
 - Each phase ships only when its verification criteria in §6 of the orchestration doc are met. No subjective "looks fine."
 - Two-week rule: if blocked > 2 weeks on a phase, re-scope or escalate. No infinite tunneling.
+- **BOM one phase ahead:** While executing phase N, research and commit `hardware/bom-phase(N+1).md` with Amazon links so parts can be ordered immediately when phase N ships. Do not plan or implement phase N+1 — only the BOM.
 
 ## Hardware safety
 
