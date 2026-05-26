@@ -2,8 +2,8 @@
 
 **Last updated:** 2026-05-25
 **Current phase:** Phase 1 — IMU bring-up
-**Last commit:** `Add Phase 1 verification scripts (rate + no-jumps)`
-**Next step:** Order BNO055 (Amazon B017PEIGIG). When it arrives: solder header → wire → photo to Claude → fill blanks in firmware/phase1-imu/src/main.cpp → flash → run V1/V2/V3.
+**Last commit:** `Add Phase 2 BOM — VL6180X + TCA9548A`
+**Next step:** Order BNO055 (Amazon B017PEIGIG). When it arrives: solder header → wire → photo to Claude → fill blanks in firmware/phase1-imu/src/main.cpp → flash → run V1/V2/V3. Phase 2 parts (hardware/bom-phase2.md) can be ordered at the same time or when Phase 1 ships.
 **Blocked on:** BNO055 hardware arrival.
 
 ---
