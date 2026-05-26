@@ -10,6 +10,9 @@ to see if any should be promoted into the next phase.
 - Magnetometer calibration: figure-8 waving procedure to fully converge BNO055 NDOF mode. Needed for accurate absolute heading in Phase 3+ (BLE, untethered). Phase 1 only needs stable relative rotation.
 - DIY sensor fusion: implement Madgwick or Mahony filter from scratch on the host side (bypassing BNO055 NDOF mode, using raw accel/gyro/mag). Pure learning exercise — understand what the BNO055 is doing internally.
 
+## Learning / stretch
+- Modern OpenGL shaders: rewrite the viewer using vertex + fragment shaders instead of immediate-mode `glBegin`/`glEnd`. A stepping stone to understanding how games actually render. Good to attempt after Phase 4 when the viewer is stable.
+
 ## Future / v3+
 - SteamVR / OpenGloves driver integration
 - Second glove (left hand)
