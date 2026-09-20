@@ -74,3 +74,14 @@ resolve it as a transitive dependency on `espressif32@6.7.0` — the build fails
 with `SPI.h: No such file or directory` from inside the BusIO source. Fix: add
 `adafruit/Adafruit BusIO@^1.16.1` explicitly to `lib_deps`. This applies to any
 Adafruit sensor library that pulls in BusIO.
+
+## 2026-09-19 — Caret ranges in lib_deps are not a lockfile
+
+`platformio.ini` listed `@^1.6.3` style carets, so over a 4-month gap the
+Adafruit libraries silently floated (BNO055 1.6.3→1.6.4, Unified Sensor
+1.1.14→1.1.15, BusIO 1.16.1→**1.17.4**, a minor bump). CLAUDE.md's "treat
+platformio.ini as a lockfile" means exact `@1.6.4` pins, no caret. Pinned to
+the versions verified to compile today rather than rolling back, since no
+version of this stack had ever run against real hardware — there was no
+known-good baseline to preserve. If the BNO055 misbehaves on first bring-up,
+these pins are what make a version bisect possible.
