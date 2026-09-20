@@ -85,3 +85,17 @@ the versions verified to compile today rather than rolling back, since no
 version of this stack had ever run against real hardware — there was no
 known-good baseline to preserve. If the BNO055 misbehaves on first bring-up,
 these pins are what make a version bisect possible.
+
+## 2026-09-19 — Shiny solder can still be a bad joint; shape is the real tell
+
+First practice joints on scrap perfboard came out bright and shiny but
+ball-shaped, with the pin fully engulfed and two pads bridged. Shiny only
+proves the alloy melted and cooled undisturbed — it does NOT prove the joint
+wetted. The diagnostic is shape: a convex bead means the pad never got hot
+enough to accept solder (solder was carried in on the iron tip), while a
+concave cone with the pin visible at its summit means it bonded. Shiny +
+balled + over-volumed specifically rules OUT a temperature problem, so the fix
+is technique (tip in the crotch of pin and pad, feed solder to the far side),
+not a hotter iron. Also: the Freenove perfboard is FR-2 phenolic, not FR-4 —
+pads lift under repeated reheating, so redo bad joints in fresh holes rather
+than reworking them.
