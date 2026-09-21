@@ -23,7 +23,7 @@ void setup() {
   // FILL IN: pass OPERATION_MODE_NDOF as the mode argument to begin().
   // Hint: look in Adafruit_BNO055.h for the adafruit_bno055_opmode_t enum.
   // Kickoff doc §Fill-in-the-blank guide has more detail.
-  if (!bno.begin(/* YOUR_MODE_CONSTANT_HERE */)) {
+  if (!bno.begin(OPERATION_MODE_NDOF)) {
     Serial.println("{\"event\":\"error\",\"msg\":\"BNO055 not found\"}");
     while (true) delay(100);
   }
@@ -46,7 +46,7 @@ void loop() {
     // FILL IN: call bno.getQuat() and assign to q.
     // Hint: return type is imu::Quaternion; access fields as q.w(), q.x(), etc.
     // Kickoff doc §Fill-in-the-blank guide has more detail.
-    imu::Quaternion q = /* YOUR_READ_CALL_HERE */;
+    imu::Quaternion q = bno.getQuat();
 
     uint8_t sys, gyro, accel, mag;
     bno.getCalibration(&sys, &gyro, &accel, &mag);
