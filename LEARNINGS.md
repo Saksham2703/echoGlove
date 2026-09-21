@@ -99,3 +99,31 @@ is technique (tip in the crotch of pin and pad, feed solder to the far side),
 not a hotter iron. Also: the Freenove perfboard is FR-2 phenolic, not FR-4 —
 pads lift under repeated reheating, so redo bad joints in fresh holes rather
 than reworking them.
+
+## 2026-09-20 — A bit-identical BNO055 quaternion at rest is normal, not a frozen read
+
+At rest the NDOF fusion output is so heavily damped that all four components
+repeat bit-for-bit for hundreds of milliseconds, which looks exactly like a
+stale register read. Don't diagnose from a still sample: capture during motion
+and count distinct values (a 60 s capture gave 3243 unique quaternions out of
+6000 samples). Also note `cal_sys` can read 3 while `cal_accel` is still 0 —
+accel only calibrates after being held still in ~6 distinct orientations, and
+letting it converge mid-test is a good way to fail the no-jumps check for a
+reason unrelated to sensor health.
+
+## 2026-09-20 — gluPerspective applies to whatever matrix stack is active
+
+`gluPerspective()` was called without `glMatrixMode(GL_PROJECTION)` first, so
+the perspective matrix landed on the modelview stack (OpenGL's default mode)
+and the render loop's `glLoadIdentity()` erased it every frame. Projection
+stayed identity, every vertex at z=-5 failed the [-1,1] depth clip, and the
+window rendered black with no error anywhere. A black GL window with a live
+data stream means look at the matrix stacks first.
+
+## 2026-09-20 — Rotate the vertices or the modelview matrix, never both
+
+The viewer passed the rotation to `glMultMatrixf()` *and* applied it to the
+vertex array in NumPy. Composing a rotation with itself doubles the angle, so
+the cube tracked the board on the correct axis in the correct direction at
+exactly twice the magnitude — a failure mode that looks alive and plausible
+until you rotate a deliberate 90 degrees and watch it land on 180.
