@@ -7,9 +7,9 @@
 
 | # | Item | Part | Source | Link | Price | Qty | Subtotal | Status |
 |---|---|---|---|---|---|---|---|---|
-| 1 | ToF distance sensor | Adafruit VL6180X Time of Flight Distance Ranging Sensor #3316 | Adafruit | https://www.adafruit.com/product/3316 | $13.95 ea | 6 (5 + 1 spare) | $83.70 | not ordered |
-| 2 | I²C multiplexer | Adafruit TCA9548A 1-to-8 I²C Multiplexer Breakout #2717 | Adafruit | https://www.adafruit.com/product/2717 | $6.95 ea | 2 (1 + 1 spare) | $13.90 | not ordered |
-| 3 | Sensor lead | STEMMA QT / Qwiic JST-SH 4-pin to Premium Male Headers Cable | Adafruit | add-on at checkout | $0.95 ea | 6 | $5.70 | not ordered |
+| 1 | ToF distance sensor | Adafruit VL6180X Time of Flight Distance Ranging Sensor #3316 | Adafruit | https://www.adafruit.com/product/3316 | $13.95 ea | 6 (5 + 1 spare) | $83.70 | ordered 2026-09-20 |
+| 2 | I²C multiplexer | Adafruit TCA9548A 1-to-8 I²C Multiplexer Breakout #2717 | Adafruit | https://www.adafruit.com/product/2717 | $6.95 ea | 2 (1 + 1 spare) | $13.90 | ordered 2026-09-20 |
+| 3 | Sensor lead | STEMMA QT / Qwiic JST-SH 4-pin to Premium Male Headers Cable | Adafruit | add-on at checkout | $0.95 ea | 6 | $5.70 | ordered 2026-09-20 |
 
 **Subtotal: $103.30.** With shipping ($6.99) and tax ($8.91): **$119.20**.
 
@@ -92,7 +92,11 @@ bus behind a mux is a bad first debugging experience. Buy the Adafruit boards.
 - Default I²C address: **0x70**. Configurable to 0x70–0x77 via A0/A1/A2 pins — no conflict expected with BNO055 (0x28) or VL6180X (0x29 per channel).
 - 8 independently switchable I²C output channels. Channels 0–4 → one VL6180X each.
 - Onboard capacitors and pull-ups: **yes**. Plug-and-play at 3.3 V.
-- Adafruit library: none required — communicate via raw `Wire.write(1 << channel)` to register 0x70 to select a channel.
+- Adafruit library: none required. The mux has no register map, just a single
+  control byte written to its device address (0x70), one bit per channel:
+  `Wire.beginTransmission(0x70); Wire.write(1 << channel); Wire.endTransmission();`
+  Writing 0x00 disconnects all channels. Enabling two channels at once is
+  legal and is exactly the 0x29 collision the mux exists to prevent.
 - Reset pin: available on the breakout header if a firmware reset is needed.
 
 ### Wiring topology

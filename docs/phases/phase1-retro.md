@@ -34,19 +34,22 @@ exactly 10 ms.
 4. `viewer.py` — rotation applied twice, so the cube moved 2× the board.
 
 ## What surprised me
-<!-- TODO: fill in -->
+- How quiet a wrong graphics program is. The black window threw no error, no warning, no failed assertion — `gluPerspective` landed on the wrong matrix stack and OpenGL happily rendered nothing.
+- Calibration is not a step you complete. `cal_sys` drifts around on its own, and the accelerometer wanted six deliberate orientations before it moved off zero. Also it may be `3` but fluctuate but it doesn't mean its uncalibrated now. It's still calibrated and usable.
 
 ## What felt rote / I'd skim next time
-<!-- TODO: fill in -->
+- Wiring a STEMMA/Qwiic-class I²C breakout. Vin/GND/SDA/SCL is the same four wires every time now; the only real question is the address.
 
 ## What I want more depth on in Phase 2
-<!-- TODO: fill in -->
+- What the fusion is actually doing. Phase 1 consumed a quaternion as a black box; I'd like to understand the filter well enough to know when to distrust its output. (There is already a parked entry for a DIY fusion exercise.)
+- Driving the TCA9548A directly with `Wire.write(1 << channel)` — no library, so this is the first time reading a datasheet and writing the register transaction myself.
 
 ## Time spent
-<!-- TODO: calendar span and active hours -->
+- Calendar: 2026-05-24 (spec written) → 2026-09-20 (shipped), ~4 months, almost all of it an idle gap rather than work.
+- Active hours: ~6 hours
 
 ## Costs
 - BNO055 (Amazon B017PEIGIG): ~$35. No other Phase 1 spend.
 
 ## Anything for the parking lot
-<!-- TODO: fill in, or leave empty -->
+- Already parked this phase: the VL6180X range claim in `bom-phase2.md` (documented 5–200 mm vs ~5–100 mm reliable) — to be settled by measuring actual fingertip geometry during the Phase 2 brainstorm.
