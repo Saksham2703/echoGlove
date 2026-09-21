@@ -11,12 +11,15 @@ from OpenGL.GL import (
     GL_DEPTH_BUFFER_BIT,
     GL_DEPTH_TEST,
     GL_LINES,
+    GL_MODELVIEW,
+    GL_PROJECTION,
     glBegin,
     glClear,
     glColor3f,
     glEnable,
     glEnd,
     glLoadIdentity,
+    glMatrixMode,
     glMultMatrixf,
     glTranslatef,
     glVertex3fv,
@@ -35,12 +38,28 @@ _VERTICES = np.array(
     dtype=np.float32,
 )
 
-# 12 edges connecting the 8 vertices
-_EDGES = [
-    (0, 1), (1, 2), (2, 3), (3, 0),  # back face
-    (4, 5), (5, 6), (6, 7), (7, 4),  # front face
-    (0, 4), (1, 5), (2, 6), (3, 7),  # connecting edges
-]
+# 12 edges grouped by the axis they run along, so each direction is a
+# different color and the cube's orientation is readable at a glance.
+_EDGES_BY_AXIS = {
+    "x": [(0, 1), (2, 3), (4, 5), (6, 7)],
+    "y": [(1, 2), (3, 0), (5, 6), (7, 4)],
+    "z": [(0, 4), (1, 5), (2, 6), (3, 7)],
+}
+
+_AXIS_COLORS = {
+    "x": (1.0, 0.35, 0.35),  # red
+    "y": (0.35, 1.0, 0.45),  # green
+    "z": (0.45, 0.6, 1.0),   # blue
+}
+
+# Body axes drawn from the center outward — these stick out past the cube face
+# and mark which end of each axis is positive.
+_ORIGIN = np.array([0, 0, 0], dtype=np.float32)
+_AXIS_TIPS = {
+    "x": np.array([1.7, 0, 0], dtype=np.float32),
+    "y": np.array([0, 1.7, 0], dtype=np.float32),
+    "z": np.array([0, 0, 1.7], dtype=np.float32),
+}
 
 
 def _quat_to_matrix(w: float, x: float, y: float, z: float) -> np.ndarray:
@@ -86,8 +105,10 @@ def run_viewer(port: str, baud: int = 115200) -> None:
     pygame.display.set_mode((800, 600), DOUBLEBUF | OPENGL)
     pygame.display.set_caption("EchoGlove — IMU Viewer")
 
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
     gluPerspective(45, 800 / 600, 0.1, 50.0)
-    glTranslatef(0.0, 0.0, -5.0)
+    glMatrixMode(GL_MODELVIEW)
     glEnable(GL_DEPTH_TEST)
 
     q: queue.Queue = queue.Queue(maxsize=10)
@@ -121,13 +142,16 @@ def run_viewer(port: str, baud: int = 115200) -> None:
             m[:3, :3] = rot
             glMultMatrixf(m.T)  # OpenGL expects column-major
 
-            rotated = _VERTICES @ rot.T
-
             glBegin(GL_LINES)
-            glColor3f(0.0, 1.0, 0.0)
-            for i, j in _EDGES:
-                glVertex3fv(rotated[i])
-                glVertex3fv(rotated[j])
+            for axis, edges in _EDGES_BY_AXIS.items():
+                glColor3f(*_AXIS_COLORS[axis])
+                for i, j in edges:
+                    glVertex3fv(_VERTICES[i])
+                    glVertex3fv(_VERTICES[j])
+            for axis, tip in _AXIS_TIPS.items():
+                glColor3f(*_AXIS_COLORS[axis])
+                glVertex3fv(_ORIGIN)
+                glVertex3fv(tip)
             glEnd()
 
             pygame.display.flip()
