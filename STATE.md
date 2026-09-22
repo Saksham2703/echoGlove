@@ -1,10 +1,10 @@
 # STATE — where I left off
 
-**Last updated:** 2026-09-20
-**Current phase:** Phase 1 — IMU bring-up — **SHIPPED** (tag `phase-1`)
-**Last commit:** `Ship Phase 1 — BNO055 quaternion stream at 100 Hz`
-**Next step:** Start the Phase 2 cycle (brainstorm → spec → plan → execute) for 5× VL6180X behind a TCA9548A. Parts list is already committed at `hardware/bom-phase2.md` — order it. While executing Phase 2, research and commit `hardware/bom-phase3.md`.
-**Blocked on:** nothing.
+**Last updated:** 2026-09-22
+**Current phase:** Phase 2 — IR fingertip layer + I²C mux — design done, not started
+**Last commit:** `Add Phase 2 design spec`
+**Next step:** Write the Phase 2 implementation plan from `docs/superpowers/specs/2026-09-22-echoglove-phase2-tof-design.md`. Parts ordered 2026-09-20 from Adafruit; nothing can be built until they land. While executing Phase 2, research and commit `hardware/bom-phase3.md` — it must include the CH-101, which §3 of the orchestration doc wants ordered at the *start* of Phase 3.
+**Blocked on:** Phase 2 hardware in transit (5+1 VL6180X, 1+1 TCA9548A, 6 STEMMA cables).
 
 ---
 
@@ -14,9 +14,10 @@
 1. `STATE.md` (this file) — top-level orientation
 2. `CLAUDE.md` — project conventions (commit style, git rules, what NOT to do)
 3. `docs/superpowers/specs/2026-05-12-echoglove-orchestration-design.md` — full project plan (Phases 0–6)
-4. `docs/phases/phase1-retro.md` — what just shipped and what broke along the way
-5. `LEARNINGS.md` — accumulated gotchas
-6. `hardware/bom-phase2.md` — Phase 2 parts, already researched
+4. `docs/superpowers/specs/2026-09-22-echoglove-phase2-tof-design.md` — the approved Phase 2 design
+5. `docs/phases/phase1-retro.md` — what last shipped and what broke along the way
+6. `LEARNINGS.md` — accumulated gotchas
+7. `hardware/bom-phase2.md` — Phase 2 parts (ordered) and the settled mount geometry
 
 **Phase 0 task status — all complete, shipped at commit `e47e0f0`, tag `phase-0`:**
 

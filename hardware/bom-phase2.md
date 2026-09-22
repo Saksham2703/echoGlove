@@ -81,9 +81,10 @@ palm creases as it flexes. Acceptable for free-air pose capture, worse if the
 glove ever needs to hold a controller. The dorsal side would be mechanically
 kinder but does not work optically.
 
-Open question for the Phase 2 brainstorm: confirm the actual knuckle pitch
-(assumed ~20 mm here) and the real close-mount travel, and check the curl
-response is monotonic over it.
+These three parameters -- actual finger pitch (assumed ~20 mm here), the tilt
+angle, and whether the curl response is monotonic across the travel -- are
+tracked as §9 of the Phase 2 design spec and close on the bench jig during
+bring-up step 5. Results land in `hardware/wiring/phase2-tof.md`.
 
 Note: because the mux addresses one sensor at a time, single-shot ranging per
 channel means only one emitter ever fires. Sensor-to-sensor optical
