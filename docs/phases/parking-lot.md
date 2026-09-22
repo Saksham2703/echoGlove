@@ -21,6 +21,18 @@ to see if any should be promoted into the next phase.
 - Magnetometer calibration: figure-8 waving procedure to fully converge BNO055 NDOF mode. Needed for accurate absolute heading in Phase 3+ (BLE, untethered). Phase 1 only needs stable relative rotation.
 - DIY sensor fusion: implement Madgwick or Mahony filter from scratch on the host side (bypassing BNO055 NDOF mode, using raw accel/gyro/mag). Pure learning exercise — understand what the BNO055 is doing internally.
 
+## Phase 4
+- **Multi-rate Kalman fusion** (raised 2026-09-22 during the Phase 2 brainstorm).
+  Predict at the IMU's 100 Hz and correct whenever a slower ToF range set lands,
+  so pose output runs at 100 Hz rather than stepping at the ToF rate. Worth being
+  precise about what this buys: the BNO055 and the ToF layer measure near-orthogonal
+  state -- hand orientation vs. finger curl -- so the IMU does not sharpen the curl
+  estimate. Between range updates curl is extrapolated from a motion model
+  (constant-velocity with decay), which works because fingers are slow relative to a
+  20 ms gap. The win is a smoothly rendered hand, not more curl accuracy. Phase 2
+  enables this by putting `rt_ms` on the wire -- the measurement instant, not the
+  transmission instant.
+
 ## Learning / stretch
 - Modern OpenGL shaders: rewrite the viewer using vertex + fragment shaders instead of immediate-mode `glBegin`/`glEnd`. A stepping stone to understanding how games actually render. Good to attempt after Phase 4 when the viewer is stable.
 
