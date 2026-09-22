@@ -55,11 +55,31 @@ past the VL6180X's reliable range *and* wide enough that one sensor's cone
 covers three or four fingers — which would fail Phase 2's crosstalk criterion
 regardless of which sensor is fitted.
 
-**Decision: mount close, not at the wrist.** A sensor just proximal to each
-MCP knuckle, ranging the nearest phalanx rather than the fingertip, works over
-roughly 10–60 mm of travel. At those distances the spot stays at or under one
-finger width, so crosstalk is solved geometrically instead of with baffles,
-and the whole travel sits inside the VL6180X's reliable band.
+**Decision: mount close, and on the palm.** Fingers curl toward the palm, which
+forces the side. A dorsal (back-of-hand) sensor sees an extended finger at
+grazing incidence — poor ToF returns — and a curled finger swings out of the
+beam entirely; both ends of the travel read far-or-nothing. On the palm the
+relationship inverts and becomes monotonic: extended is far, curled is near.
+
+Position: on the palm at the base of each finger, roughly under the MCP crease,
+aimed distally along the finger's axis and tilted up toward it. Expected travel
+is ~20–30 mm fully curled (beam meeting the middle phalanx) to ~70–90 mm
+extended (beam meeting the finger out near the tip). At those distances the
+spot stays at or under one finger width, so crosstalk is solved geometrically
+instead of with baffles, and the whole travel sits inside the VL6180X's
+reliable band.
+
+**Tilt angle is the free parameter and is not yet decided.** Aimed flat along
+the palm, an extended finger never crosses the beam and there is no reading at
+all; tilted too steeply, the beam meets the finger close up even when extended
+and the top of the range collapses. Roughly 10–20° is the starting guess. This
+is a bench question, not a paper one — tape one sensor to the palm, aim it
+along the index finger, and watch the numbers through a full curl.
+
+Known cost of the palm side: sensors sit where the hand grips things, and the
+palm creases as it flexes. Acceptable for free-air pose capture, worse if the
+glove ever needs to hold a controller. The dorsal side would be mechanically
+kinder but does not work optically.
 
 Open question for the Phase 2 brainstorm: confirm the actual knuckle pitch
 (assumed ~20 mm here) and the real close-mount travel, and check the curl
