@@ -34,15 +34,56 @@ cannot join sensor to mux — and daisy-chaining sensors to each other would put
 two 0x29 devices on one bus segment, which is the exact collision the mux
 exists to prevent.
 
+### Mounting geometry (decided 2026-09-21)
+
+Both sensors have a ~25° field of view (ST datasheets), which gives a useful
+rule of thumb:
+
+    spot diameter ≈ 0.44 × distance
+
+| Mount distance | Spot diameter | vs ~20 mm finger pitch |
+|---|---|---|
+| 200 mm | 89 mm | covers 4+ fingers |
+| 140 mm | 62 mm | covers 3 fingers |
+| 85 mm | 38 mm | covers 2 fingers |
+| **45 mm** | **20 mm** | **≈ one finger — isolation threshold** |
+| 25 mm | 11 mm | cleanly inside one finger |
+
+Measured hand geometry: fingertip sits 40–60 mm from a wrist / back-of-hand
+mount when fully curled, 140–200 mm when fully extended. That span is both
+past the VL6180X's reliable range *and* wide enough that one sensor's cone
+covers three or four fingers — which would fail Phase 2's crosstalk criterion
+regardless of which sensor is fitted.
+
+**Decision: mount close, not at the wrist.** A sensor just proximal to each
+MCP knuckle, ranging the nearest phalanx rather than the fingertip, works over
+roughly 10–60 mm of travel. At those distances the spot stays at or under one
+finger width, so crosstalk is solved geometrically instead of with baffles,
+and the whole travel sits inside the VL6180X's reliable band.
+
+Open question for the Phase 2 brainstorm: confirm the actual knuckle pitch
+(assumed ~20 mm here) and the real close-mount travel, and check the curl
+response is monotonic over it.
+
+Note: because the mux addresses one sensor at a time, single-shot ranging per
+channel means only one emitter ever fires. Sensor-to-sensor optical
+interference is prevented by the mux sequencing, separately from the
+geometric crosstalk above.
+
 ### Why not the VL53L0X (#3317, ~30–1000 mm)
 
-Considered and rejected. Its **30 mm minimum** puts a fully curled finger in a
-dead zone, which is the most informative end of the travel; the VL6180X reads
-from 5 mm. It is also fixed at 0x29, so it would not remove the need for the
-mux, and its much longer range works against Phase 2's crosstalk criterion by
-picking up the desk and surroundings behind the hand. Revisit only if measured
-finger geometry actually demands >100 mm — and even then, repositioning the
-sensor is the likelier answer.
+Considered and rejected — twice, for different reasons.
+
+First rejection assumed a fully curled fingertip would fall inside its 30 mm
+dead zone. Measurement disproved that: curled is 40–60 mm at a wrist mount.
+
+It was then reconsidered when those measurements showed full extension at
+140–200 mm, past the VL6180X's reliable range. Rejected again, and this is the
+reason that holds: the fix for that range problem is a close mount (above),
+and under a close mount the **30 mm minimum** puts most of the 10–60 mm working
+travel in the dead zone. The extra range is worthless there, and the floor is
+disqualifying. It is also fixed at 0x29, so it never removed the need for the
+mux. Revisit only if the close mount proves mechanically impossible.
 
 ## Sourcing note (2026-09-20)
 
@@ -83,7 +124,9 @@ bus behind a mux is a bad first debugging experience. Buy the Adafruit boards.
 - Supply voltage: 2.7–5.5 V (onboard regulator + level-shifters). 3.3 V from ESP32 works directly.
 - Fixed I²C address: **0x29** — all five sensors share the same address, which is why the mux is required.
 - Onboard pull-ups: **yes** (on the STEMMA QT connector lines). No external pull-up resistors needed.
-- Range: 5–200 mm. Optimal range for finger proximity (0–20 cm) is well within spec.
+- Range: **5–100 mm reliable**; Adafruit reports 150–200 mm only "with good
+  ambient conditions". Treat 100 mm as the design limit. See the mounting
+  geometry section below — the mount distance is chosen to stay inside this.
 - XSHUT pin: not needed when each sensor is on its own mux channel. Leave unconnected or tie high.
 - Adafruit library: `Adafruit_VL6180X` (Arduino), maintained and tested with the BNO055 on the same I²C bus in prior projects.
 
